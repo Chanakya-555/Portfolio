@@ -17,7 +17,7 @@ export function Hero() {
         </div>
 
         <h1 className="text-5xl md:text-7xl font-bold mb-6 text-balance">
-          Hello! I&apos;m <span className="text-primary">Cheedi Chanakya Sai</span>
+          Hello! I&apos;m <span className="text-primary">Chanakya Sai Cheedi</span>
         </h1>
 
         <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
