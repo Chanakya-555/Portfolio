@@ -37,10 +37,10 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="py-20 px-4 bg-muted/30">
-      <div className="container mx-auto max-w-4xl">
+    <section id="contact" className="py-20 px-4">
+      <div className="container mx-auto max-w-4xl glass-panel p-8 md:p-12 rounded-3xl backdrop-blur-md">
         <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">
-          Get In <span className="text-primary">Touch</span>
+          Get In <span className="text-fluid">Touch</span>
         </h2>
 
         <p className="text-muted-foreground text-center mb-12">
@@ -56,7 +56,7 @@ export function Contact() {
               rel="noopener noreferrer"
               className="block"
             >
-              <Card className="group h-full transition-all duration-300 hover:border-primary hover:shadow-lg hover:shadow-primary/20">
+              <Card className="group h-full transition-all duration-300 hover:border-primary hover:shadow-lg hover:shadow-primary/20 bg-white/50 dark:bg-black/50 border-white/20 dark:border-white/10">
                 <CardContent className="p-6 flex flex-col items-center text-center gap-3">
                   <div className="p-3 rounded-full bg-primary/10 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                     <link.icon className="w-6 h-6" />

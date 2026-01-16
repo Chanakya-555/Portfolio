@@ -39,9 +39,9 @@ const skills = [
 export function Skills() {
   return (
     <section id="skills" className="py-20 px-4">
-      <div className="container mx-auto">
+      <div className="container mx-auto glass-panel p-8 md:p-12 rounded-3xl backdrop-blur-md">
         <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">
-          My <span className="text-primary">Skills</span>
+          My <span className="text-fluid">Skills</span>
         </h2>
         <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
           A diverse toolkit for building modern, scalable applications
@@ -51,7 +51,7 @@ export function Skills() {
           {skills.map((skill, index) => (
             <Card
               key={index}
-              className="group hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-1"
+              className="group hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-1 bg-white/50 dark:bg-black/50 border-white/20 dark:border-white/10"
             >
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">

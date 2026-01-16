@@ -47,7 +47,7 @@ export function Header() {
   ]
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/10 dark:bg-black/10 backdrop-blur-xl border-b border-white/20 dark:border-white/10 shadow-sm transition-all duration-300">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -61,9 +61,8 @@ export function Header() {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  activeSection === item.id ? "text-primary" : "text-muted-foreground"
-                }`}
+                className={`text-sm font-medium transition-colors hover:text-primary ${activeSection === item.id ? "text-primary" : "text-muted-foreground"
+                  }`}
               >
                 {item.label}
               </button>

@@ -1,9 +1,9 @@
 export function About() {
   return (
-    <section id="about" className="py-20 px-4 bg-muted/30">
-      <div className="container mx-auto max-w-4xl">
+    <section id="about" className="py-20 px-4">
+      <div className="container mx-auto max-w-4xl glass-panel p-8 md:p-12 rounded-3xl backdrop-blur-md">
         <h2 className="text-4xl md:text-5xl font-bold mb-8 text-center">
-          About <span className="text-primary">Me</span>
+          About <span className="text-fluid">Me</span>
         </h2>
 
         <div className="prose prose-lg dark:prose-invert mx-auto">
