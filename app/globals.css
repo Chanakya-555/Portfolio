@@ -77,7 +77,6 @@
 }
 
 @theme inline {
-  /* optional: --font-sans, --font-serif, --font-mono if they are applied in the layout.tsx */
   --font-sans: "Geist", "Geist Fallback";
   --font-mono: "Geist Mono", "Geist Mono Fallback";
   --color-background: var(--background);
@@ -104,10 +103,6 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -116,6 +111,10 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
 @layer base {
@@ -132,30 +131,7 @@
   }
 }
 
-/* Fluid Background & Animations */
-@layer utilities {
-  .glass-panel {
-    @apply backdrop-blur-[40px] bg-gradient-to-br from-white/60 to-white/10 dark:from-white/10 dark:to-white/5 border border-white/40 dark:border-white/10;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-  }
-
-  .dark .glass-panel {
-    box-shadow: none;
-  }
-
-  .text-fluid {
-    background: linear-gradient(to right,
-        oklch(0.7 0.15 220),
-        oklch(0.65 0.18 200),
-        oklch(0.5 0.15 240),
-        oklch(0.7 0.15 220));
-    background-size: 200% auto;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: textShimmer 4s linear infinite;
-  }
-}
-
+/* ===== Keyframe Animations ===== */
 @keyframes blob {
   0% {
     transform: translate(0px, 0px) scale(1);
@@ -192,238 +168,584 @@
   }
 }
 
-.animate-blob {
-  animation: blob 7s infinite;
+/* ===== Glass Panel & Fluid Text (Plain CSS) ===== */
+.glass-panel {
+  backdrop-filter: blur(40px);
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1));
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
 }
 
-.animation-delay-2000 {
-  animation-delay: 2s;
+.dark .glass-panel {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
 }
 
-.animation-delay-4000 {
-  animation-delay: 4s;
+.text-fluid {
+  background: linear-gradient(to right, oklch(0.7 0.15 220), oklch(0.65 0.18 200), oklch(0.5 0.15 240), oklch(0.7 0.15 220));
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShimmer 4s linear infinite;
 }
 
-.animate-float-slow {
-  animation: float-slow 6s ease-in-out infinite;
-}
-
-/* ===== Header Styles ===== */
+/* ===== Header Styles (Plain CSS) ===== */
 .header-nav {
-  @apply fixed top-0 left-0 right-0 z-50 bg-white/10 dark:bg-black/10 backdrop-blur-xl border-b border-white/20 dark:border-white/10 shadow-sm transition-all duration-300;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.3s;
+}
+
+.dark .header-nav {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .header-container {
-  @apply container mx-auto px-4 py-4;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem;
 }
 
 .header-content {
-  @apply flex items-center justify-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .logo-wrapper {
-  @apply relative w-10 h-10 rounded-full overflow-hidden border-2 border-primary;
+  position: relative;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  overflow: hidden;
+  border: 2px solid var(--primary);
 }
 
 .nav-wrapper {
-  @apply hidden md:flex items-center gap-6;
+  display: none;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .nav-wrapper {
+    display: flex;
+  }
 }
 
 .nav-link {
-  @apply text-sm font-medium transition-colors hover:text-primary text-muted-foreground;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  transition: color 0.2s;
+}
+
+.nav-link:hover {
+  color: var(--primary);
 }
 
 .nav-link-active {
-  @apply text-sm font-medium transition-colors hover:text-primary text-primary;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--primary);
+  transition: color 0.2s;
 }
 
-/* ===== Hero Styles ===== */
+/* ===== Hero Styles (Plain CSS) ===== */
 .hero-section {
-  @apply relative min-h-screen flex items-center justify-center pt-20 px-4;
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .hero-container {
-  @apply container relative mx-auto text-center z-10;
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+  text-align: center;
+  z-index: 10;
 }
 
 .hero-content {
-  @apply glass-panel p-8 md:p-12 rounded-3xl max-w-4xl mx-auto backdrop-blur-md;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  max-width: 56rem;
+  margin: 0 auto;
+  backdrop-filter: blur(40px);
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1));
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+@media (min-width: 768px) {
+  .hero-content {
+    padding: 3rem;
+  }
+}
+
+.dark .hero-content {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
 }
 
 .hero-avatar-wrapper {
-  @apply relative w-40 h-40 mx-auto mb-8 animate-float-slow;
+  position: relative;
+  width: 10rem;
+  height: 10rem;
+  margin: 0 auto 2rem;
+  animation: float-slow 6s ease-in-out infinite;
 }
 
 .hero-avatar {
-  @apply object-cover rounded-full border-4 border-white/50 shadow-2xl;
+  object-fit: cover;
+  border-radius: 9999px;
+  border: 4px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
 .hero-title {
-  @apply text-5xl md:text-7xl font-bold mb-6 text-balance;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-wrap: balance;
+}
+
+@media (min-width: 768px) {
+  .hero-title {
+    font-size: 4.5rem;
+  }
 }
 
 .hero-subtitle {
-  @apply text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty;
+  font-size: 1.25rem;
+  color: var(--muted-foreground);
+  margin-bottom: 2rem;
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-wrap: pretty;
+}
+
+@media (min-width: 768px) {
+  .hero-subtitle {
+    font-size: 1.5rem;
+  }
 }
 
 .hero-buttons {
-  @apply flex items-center justify-center gap-4 flex-wrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .hero-btn-primary {
-  @apply inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:opacity-90 transition-all hover:scale-105 hover:shadow-lg shadow-primary/25;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px 0 rgba(var(--primary), 0.25);
+}
+
+.hero-btn-primary:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
 }
 
 .hero-btn-secondary {
-  @apply inline-flex items-center justify-center px-6 py-3 border-2 border-primary/20 bg-white/5 backdrop-blur-sm text-primary rounded-lg font-semibold hover:bg-primary/10 transition-all hover:scale-105;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid rgba(var(--primary), 0.2);
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(4px);
+  color: var(--primary);
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.hero-btn-secondary:hover {
+  background-color: rgba(var(--primary), 0.1);
+  transform: scale(1.05);
 }
 
 .hero-scroll-indicator {
-  @apply mt-16 animate-bounce;
+  margin-top: 4rem;
+  animation: bounce 1s infinite;
 }
 
 .hero-scroll-icon {
-  @apply w-6 h-6 mx-auto text-primary;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0 auto;
+  color: var(--primary);
 }
 
-/* ===== Section Styles ===== */
+/* ===== Section Styles (Plain CSS) ===== */
 .section-wrapper {
-  @apply py-20 px-4;
+  padding: 5rem 1rem;
 }
 
 .section-container {
-  @apply container mx-auto max-w-4xl glass-panel p-8 md:p-12 rounded-3xl backdrop-blur-md;
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  backdrop-filter: blur(40px);
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1));
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+@media (min-width: 768px) {
+  .section-container {
+    padding: 3rem;
+  }
+}
+
+.dark .section-container {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
 }
 
 .section-container-wide {
-  @apply container mx-auto glass-panel p-8 md:p-12 rounded-3xl backdrop-blur-md;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  backdrop-filter: blur(40px);
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1));
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+@media (min-width: 768px) {
+  .section-container-wide {
+    padding: 3rem;
+  }
+}
+
+.dark .section-container-wide {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
 }
 
 .section-title {
-  @apply text-4xl md:text-5xl font-bold mb-8 text-center;
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .section-title {
+    font-size: 3rem;
+  }
 }
 
 .section-title-sm {
-  @apply text-4xl md:text-5xl font-bold mb-4 text-center;
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .section-title-sm {
+    font-size: 3rem;
+  }
 }
 
 .section-subtitle {
-  @apply text-muted-foreground text-center mb-12 max-w-2xl mx-auto;
+  color: var(--muted-foreground);
+  text-align: center;
+  margin-bottom: 3rem;
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .section-text {
-  @apply text-lg leading-relaxed text-muted-foreground text-center;
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: var(--muted-foreground);
+  text-align: center;
 }
 
 .section-text-mt {
-  @apply text-lg leading-relaxed text-muted-foreground text-center mt-6;
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: var(--muted-foreground);
+  text-align: center;
+  margin-top: 1.5rem;
 }
 
-/* ===== Skills Styles ===== */
+/* ===== Skills Styles (Plain CSS) ===== */
 .skills-grid {
-  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .skills-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .skill-card {
-  @apply group hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-1 bg-white/50 dark:bg-black/50 border-white/20 dark:border-white/10;
+  transition: all 0.3s;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .skill-card {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.skill-card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 10px 15px -3px rgba(var(--primary), 0.2);
+  transform: translateY(-0.25rem);
 }
 
 .skill-card-content {
-  @apply p-6;
+  padding: 1.5rem;
 }
 
 .skill-card-inner {
-  @apply flex items-start gap-4;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
 }
 
 .skill-icon-wrapper {
-  @apply p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors;
+  padding: 0.75rem;
+  background-color: rgba(var(--primary), 0.1);
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.skill-card:hover .skill-icon-wrapper {
+  background-color: rgba(var(--primary), 0.2);
 }
 
 .skill-icon {
-  @apply w-6 h-6 text-primary;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--primary);
 }
 
 .skill-title {
-  @apply font-semibold text-lg mb-3;
+  font-weight: 600;
+  font-size: 1.125rem;
+  margin-bottom: 0.75rem;
 }
 
 .skill-tags {
-  @apply flex flex-wrap gap-2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .skill-tag {
-  @apply text-xs px-2 py-1 bg-secondary text-secondary-foreground rounded-md;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+  border-radius: 0.375rem;
 }
 
-/* ===== Contact Styles ===== */
+/* ===== Contact Styles (Plain CSS) ===== */
 .contact-grid {
-  @apply grid md:grid-cols-3 gap-6 mb-10;
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .contact-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .contact-card {
-  @apply group h-full transition-all duration-300 hover:border-primary hover:shadow-lg hover:shadow-primary/20 bg-white/50 dark:bg-black/50 border-white/20 dark:border-white/10;
+  height: 100%;
+  transition: all 0.3s;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .contact-card {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.contact-card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 10px 15px -3px rgba(var(--primary), 0.2);
 }
 
 .contact-card-content {
-  @apply p-6 flex flex-col items-center text-center gap-3;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
 }
 
 .contact-icon-wrapper {
-  @apply p-3 rounded-full bg-primary/10 group-hover:bg-primary group-hover:text-primary-foreground transition-colors;
+  padding: 0.75rem;
+  border-radius: 9999px;
+  background-color: rgba(var(--primary), 0.1);
+  transition: all 0.2s;
+}
+
+.contact-card:hover .contact-icon-wrapper {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
 }
 
 .contact-icon {
-  @apply w-6 h-6;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .contact-label {
-  @apply font-semibold;
+  font-weight: 600;
 }
 
 .contact-value {
-  @apply text-sm text-muted-foreground;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
 }
 
 .contact-cta {
-  @apply text-center;
+  text-align: center;
 }
 
-/* ===== Footer Styles ===== */
+/* ===== Footer Styles (Plain CSS) ===== */
 .footer-wrapper {
-  @apply py-8 px-4 border-t border-border bg-card;
+  padding: 2rem 1rem;
+  border-top: 1px solid var(--border);
+  background-color: var(--card);
 }
 
 .footer-container {
-  @apply container mx-auto text-center;
+  max-width: 1280px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .footer-text {
-  @apply text-muted-foreground;
+  color: var(--muted-foreground);
 }
 
-/* ===== Background Blobs ===== */
+/* ===== Background Blobs (Plain CSS) ===== */
 .blob-container {
-  @apply fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none hidden dark:block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -10;
+  pointer-events: none;
+  display: none;
+}
+
+.dark .blob-container {
+  display: block;
 }
 
 .blob-primary {
-  @apply absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob;
+  position: absolute;
+  top: 0;
+  left: 25%;
+  width: 24rem;
+  height: 24rem;
+  background-color: rgba(var(--primary), 0.2);
+  border-radius: 9999px;
+  mix-blend-mode: multiply;
+  filter: blur(48px);
+  opacity: 0.7;
+  animation: blob 7s infinite;
 }
 
 .blob-purple {
-  @apply absolute top-0 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000;
+  position: absolute;
+  top: 0;
+  right: 25%;
+  width: 24rem;
+  height: 24rem;
+  background-color: rgba(168, 85, 247, 0.2);
+  border-radius: 9999px;
+  mix-blend-mode: multiply;
+  filter: blur(48px);
+  opacity: 0.7;
+  animation: blob 7s infinite;
+  animation-delay: 2s;
 }
 
 .blob-pink {
-  @apply absolute -bottom-32 left-1/3 w-96 h-96 bg-pink-500/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000;
+  position: absolute;
+  bottom: -8rem;
+  left: 33%;
+  width: 24rem;
+  height: 24rem;
+  background-color: rgba(236, 72, 153, 0.2);
+  border-radius: 9999px;
+  mix-blend-mode: multiply;
+  filter: blur(48px);
+  opacity: 0.7;
+  animation: blob 7s infinite;
+  animation-delay: 4s;
 }
 
-/* ===== Utility Styles ===== */
+/* ===== Utility Styles (Plain CSS) ===== */
 .page-wrapper {
-  @apply min-h-screen relative overflow-hidden;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
 .prose-wrapper {
-  @apply prose prose-lg dark:prose-invert mx-auto;
+  max-width: 65ch;
+  margin: 0 auto;
 }
