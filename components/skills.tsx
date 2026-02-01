@@ -38,31 +38,28 @@ const skills = [
 
 export function Skills() {
   return (
-    <section id="skills" className="py-20 px-4">
-      <div className="container mx-auto glass-panel p-8 md:p-12 rounded-3xl backdrop-blur-md">
-        <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">
+    <section id="skills" className="section-wrapper">
+      <div className="section-container-wide">
+        <h2 className="section-title-sm">
           My <span className="text-fluid">Skills</span>
         </h2>
-        <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
+        <p className="section-subtitle">
           A diverse toolkit for building modern, scalable applications
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="skills-grid">
           {skills.map((skill, index) => (
-            <Card
-              key={index}
-              className="group hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-1 bg-white/50 dark:bg-black/50 border-white/20 dark:border-white/10"
-            >
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                    <skill.icon className="w-6 h-6 text-primary" />
+            <Card key={index} className="skill-card">
+              <CardContent className="skill-card-content">
+                <div className="skill-card-inner">
+                  <div className="skill-icon-wrapper">
+                    <skill.icon className="skill-icon" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-lg mb-3">{skill.title}</h3>
-                    <div className="flex flex-wrap gap-2">
+                    <h3 className="skill-title">{skill.title}</h3>
+                    <div className="skill-tags">
                       {skill.items.map((item, i) => (
-                        <span key={i} className="text-xs px-2 py-1 bg-secondary text-secondary-foreground rounded-md">
+                        <span key={i} className="skill-tag">
                           {item}
                         </span>
                       ))}

@@ -47,22 +47,21 @@ export function Header() {
   ]
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/10 dark:bg-black/10 backdrop-blur-xl border-b border-white/20 dark:border-white/10 shadow-sm transition-all duration-300">
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
+    <header className="header-nav">
+      <div className="header-container">
+        <div className="header-content">
           <div className="flex items-center gap-3">
-            <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-primary">
+            <div className="logo-wrapper">
               <Image src="/logo.png" alt="Logo" fill className="object-cover" />
             </div>
           </div>
 
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="nav-wrapper">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`text-sm font-medium transition-colors hover:text-primary ${activeSection === item.id ? "text-primary" : "text-muted-foreground"
-                  }`}
+                className={activeSection === item.id ? "nav-link-active" : "nav-link"}
               >
                 {item.label}
               </button>

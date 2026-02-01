@@ -37,17 +37,17 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="py-20 px-4">
-      <div className="container mx-auto max-w-4xl glass-panel p-8 md:p-12 rounded-3xl backdrop-blur-md">
-        <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">
+    <section id="contact" className="section-wrapper">
+      <div className="section-container">
+        <h2 className="section-title-sm">
           Get In <span className="text-fluid">Touch</span>
         </h2>
 
-        <p className="text-muted-foreground text-center mb-12">
+        <p className="section-subtitle">
           Let&apos;s connect and build something amazing together
         </p>
 
-        <div className="grid md:grid-cols-3 gap-6 mb-10">
+        <div className="contact-grid">
           {socialLinks.map((link, index) => (
             <a
               key={index}
@@ -56,15 +56,15 @@ export function Contact() {
               rel="noopener noreferrer"
               className="block"
             >
-              <Card className="group h-full transition-all duration-300 hover:border-primary hover:shadow-lg hover:shadow-primary/20 bg-white/50 dark:bg-black/50 border-white/20 dark:border-white/10">
-                <CardContent className="p-6 flex flex-col items-center text-center gap-3">
-                  <div className="p-3 rounded-full bg-primary/10 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                    <link.icon className="w-6 h-6" />
+              <Card className="contact-card">
+                <CardContent className="contact-card-content">
+                  <div className="contact-icon-wrapper">
+                    <link.icon className="contact-icon" />
                   </div>
 
                   <div>
-                    <p className="font-semibold">{link.label}</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="contact-label">{link.label}</p>
+                    <p className="contact-value">
                       {link.value}
                     </p>
                   </div>
@@ -74,7 +74,7 @@ export function Contact() {
           ))}
         </div>
 
-        <div className="text-center">
+        <div className="contact-cta">
           <Button onClick={handleSayHello} size="lg" className="gap-2">
             <Send className="w-4 h-4" />
             Message Me for More Details
