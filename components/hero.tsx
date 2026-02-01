@@ -10,7 +10,7 @@ export function Hero() {
         <div className="glass-panel p-8 md:p-12 rounded-3xl max-w-4xl mx-auto backdrop-blur-md">
           <div className="relative w-40 h-40 mx-auto mb-8 animate-float-slow">
             <Image
-              src="avatar.jpeg"
+              src="/avatar.jpeg"
               alt="Cheedi Chanakya Sai"
               fill
               className="object-cover rounded-full border-4 border-white/50 shadow-2xl"

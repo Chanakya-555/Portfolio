@@ -52,7 +52,7 @@ export function Header() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-primary">
-              <Image src="logo.png" alt="Logo" fill className="object-cover" />
+              <Image src="/logo.png" alt="Logo" fill className="object-cover" />
             </div>
           </div>
 
